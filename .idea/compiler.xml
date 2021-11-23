@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Save-O-User-Profile" />
+        <module name="Save-O-Server" />
+        <module name="Save-O-Configuration" />
+        <module name="Save-O-Data-Storage" />
+        <module name="Save-O-Gateway" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Save-O-Configuration" target="17" />
+      <module name="Save-O-Data-Storage" target="17" />
+      <module name="Save-O-Gateway" target="17" />
+      <module name="Save-O-Server" target="17" />
+      <module name="Save-O-User-Profile" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Save-O-Configuration" options="-parameters" />
+      <module name="Save-O-Data-Storage" options="-parameters" />
+      <module name="Save-O-Gateway" options="-parameters" />
+      <module name="Save-O-Server" options="-parameters" />
+      <module name="Save-O-User-Profile" options="-parameters" />
+    </option>
+  </component>
+</project>
