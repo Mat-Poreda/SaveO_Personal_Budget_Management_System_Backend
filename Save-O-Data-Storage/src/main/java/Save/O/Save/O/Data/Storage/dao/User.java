@@ -1,5 +1,6 @@
 package Save.O.Save.O.Data.Storage.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,17 +14,14 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Styling {
-
+public class User {
+    @OneToMany( cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @JsonIgnore
+    @JoinColumn(name="user_id")
+    private Set<Category> categories;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String icon;
-    private String backgroundColor;
-    private String fontColor;
-
-
 
 }

@@ -1,6 +1,8 @@
 package Save.O.Save.O.Data.Storage.dao;
 
-import Save.O.Save.O.Data.Storage.enums.CategoryEnum;
+import Save.O.Save.O.Data.Storage.enums.Type;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,17 +17,26 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Category {
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JsonIgnore
+    private User user;
 
-    @ManyToMany(mappedBy = "categories")
-    private Set<Styling> styles;
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @JsonIgnore
+    @JoinColumn(name="category_id")
+    private Set<Transaction> transactions;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private CategoryEnum categoryName;
-    @OneToMany
-    @JoinColumn(name="types")
-    private Set<Type> types;
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private Type type;
+    private String name;
 
+    public Category(Type type, String name) {
+        this.type=type;
+        this.name=name;
 
+    }
 }

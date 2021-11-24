@@ -6,26 +6,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Type {
-    @ManyToMany
-    private List<Styling> styles;
-    @ManyToOne
-    private Category category;
-
-
+public class Image {
+    @OneToOne
+    private Transaction transaction;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long name;
-
+    @Lob
+    private byte[] content;
+    private String name;
 
 }
