@@ -1,12 +1,10 @@
 package Save.O.Save.O.User.Profile.dto;
 
-import Save.O.Save.O.Data.Storage.dao.Category;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Set;
 
 @Getter
 @Setter
@@ -14,5 +12,14 @@ import java.util.Set;
 @AllArgsConstructor
 public class UserDTO {
     private Long id;
-    private Set<Category> categories;
+    private String username;
+    private String email;
+    private String bio;
+    private String imageId;
+
+    public UserDTO(String email) {
+        this.email = email;
+        this.bio = "";
+        this.username = "";
+    }
 }

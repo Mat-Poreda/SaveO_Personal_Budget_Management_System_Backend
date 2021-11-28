@@ -6,12 +6,11 @@ import Save.O.Save.O.User.Profile.dto.UserDTO;
 import Save.O.Save.O.User.Profile.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.HashSet;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,6 +21,9 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private ImageService imageService;
+
 
     public UserDTO convertUserToDto(User user) {
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
@@ -43,9 +45,6 @@ public class UserService {
         }
     }
 
-    private UserDTO convertUserToDto(User user) {
-        
-    }
     
 
     public List<UserDTO> getAllUsers() {
@@ -64,12 +63,28 @@ public class UserService {
         }
     }
 
-    private UserDTO convertUserToDto(User user) {
-    }
 
     public void deleteUserById(Long id) {
         if(userRepository.findById(id).isPresent()){
             userRepository.delete(userRepository.findById(id).get());
         }
     }
+
+    public UserDTO updateUser(Long id, UserDTO userDTO)throws Exception{
+
+        if(userRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with given Id does not exist");
+        }else{
+            User user=userRepository.findById(id).get();
+            if(!userDTO.getBio().isEmpty()){
+                user.setBio(userDTO.getBio());
+            }
+            if(!userDTO.getUsername().isEmpty()){
+                user.setUsername(userDTO.getUsername());
+            }
+
+         return convertUserToDto(userRepository.save(user));
+        }
+    }
+
 }

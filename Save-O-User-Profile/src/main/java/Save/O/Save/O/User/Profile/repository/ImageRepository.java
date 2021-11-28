@@ -1,6 +1,7 @@
 package Save.O.Save.O.User.Profile.repository;
 
-import Save.O.Save.O.Data.Storage.dao.Image;
+
+import Save.O.Save.O.User.Profile.dao.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

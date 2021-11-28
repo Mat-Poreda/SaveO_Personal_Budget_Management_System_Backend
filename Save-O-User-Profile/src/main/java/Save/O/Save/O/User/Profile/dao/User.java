@@ -1,6 +1,7 @@
 package Save.O.Save.O.User.Profile.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,13 +16,19 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    @OneToMany( cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToOne
+    @JoinColumn(name = "imageId")
     @JsonIgnore
-    @JoinColumn(name="user_id")
-    private Set<Category> categories;
-
+    Image image;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
+    @NotNull
+    @Column(unique = true)
+    private String email;
+    private String username;
+    @Lob
+    @Column
+    private String bio;
 
 }

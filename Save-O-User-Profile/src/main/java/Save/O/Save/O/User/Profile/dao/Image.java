@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Image {
     @OneToOne
-    private Transaction transaction;
+    private User user;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

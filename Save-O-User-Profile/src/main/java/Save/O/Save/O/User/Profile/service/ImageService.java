@@ -1,9 +1,9 @@
 package Save.O.Save.O.User.Profile.service;
 
-import Save.O.Save.O.Data.Storage.dao.Image;
-import Save.O.Save.O.Data.Storage.dao.Transaction;
-import Save.O.Save.O.Data.Storage.repository.ImageRepository;
-import Save.O.Save.O.Data.Storage.repository.TransactionRepository;
+import Save.O.Save.O.User.Profile.dao.Image;
+import Save.O.Save.O.User.Profile.dao.User;
+import Save.O.Save.O.User.Profile.repository.ImageRepository;
+import Save.O.Save.O.User.Profile.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -19,19 +19,20 @@ public class ImageService {
     @Autowired
     ImageRepository imageRepository;
     @Autowired
-    TransactionRepository transactionRepository;
+    UserRepository userRepository;
 
-    public Long storeImage(Long transactionId, MultipartFile multipartImage) throws IOException {
+
+    public Long storeImage(Long userId, MultipartFile multipartImage) throws IOException {
         Image dbImage = new Image();
         dbImage.setName(multipartImage.getName());
         dbImage.setContent(multipartImage.getBytes());
 
-        Transaction transaction = transactionRepository.findById(transactionId).get();
-        if (transaction.getImage() != null) {
-            dbImage.setId(transaction.getImage().getId());
+        User user = userRepository.findById(userId).get();
+        if (user.getImage() != null) {
+            dbImage.setId(user.getImage().getId());
         }
-        transaction.setImage(imageRepository.save(dbImage));
-        return transactionRepository.save(transaction).getImage().getId();
+        user.setImage(imageRepository.save(dbImage));
+        return userRepository.save(user).getImage().getId();
     }
 
     public Resource getImage(Long imageId) {
