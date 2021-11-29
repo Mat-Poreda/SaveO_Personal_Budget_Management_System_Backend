@@ -6,12 +6,13 @@ import Save.O.Save.O.Data.Storage.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/users/")
+@RequestMapping("/api/category")
 public class CategoryController {
     @Autowired
     CategoryService categoryService;
@@ -25,12 +26,12 @@ public class CategoryController {
 //    public UserDTO getAllUsers(@PathVariable(name="id")Long id){
 //        return categoryService.getUserById(id);
 //    }
-//
-//    @PostMapping
-//    public UserDTO createNewUser(Optional<Long> id){
-//        return categoryService.createNewUser(id);
-//    }
-//
+
+    @PostMapping
+    public void createCategory(@RequestBody CategoryDTO categoryDTO) throws ParseException {
+        categoryService.createCategory(categoryDTO);
+    }
+
 //    @DeleteMapping("/{id}")
 //    public void deleteUserById(@PathVariable(name="id")Long id){
 //        categoryService.deleteUserById(id);

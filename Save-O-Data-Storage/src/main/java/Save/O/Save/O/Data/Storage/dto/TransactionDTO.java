@@ -20,5 +20,6 @@ public class TransactionDTO {
     private BigDecimal price;
     private LocalDate date;
     private ImageDTO imageDTO;
+    private Long categoryId;
 
 }

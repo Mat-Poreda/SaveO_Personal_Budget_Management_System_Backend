@@ -21,7 +21,7 @@ public class Transaction {
     @JsonIgnore
     private Category category;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "imageId")
     Image image;
 
