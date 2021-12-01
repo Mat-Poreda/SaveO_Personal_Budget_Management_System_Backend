@@ -1,6 +1,8 @@
 package Save.O.Save.O.Data.Storage.controller;
 
+import Save.O.Save.O.Data.Storage.dto.ReportRequestDTO;
 import Save.O.Save.O.Data.Storage.dto.UserDTO;
+import Save.O.Save.O.Data.Storage.repository.TransactionRepository;
 import Save.O.Save.O.Data.Storage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    TransactionRepository transactionRepository;
+
     @GetMapping
     public List<UserDTO> getAllUsers(){
     return userService.getAllUsers();
@@ -22,6 +27,11 @@ public class UserController {
     @GetMapping("/{id}")
     public UserDTO getUserDTO(@PathVariable(name="id")Long id){
         return userService.getUserDTOById(id);
+    }
+
+    @GetMapping("/{id}/balance")
+    public List<String> getUserCategoriesBalance(@PathVariable(name="id")Long id, @RequestBody ReportRequestDTO requestBody){
+        return transactionRepository.userCategoriesBalance(id, requestBody.getStartDate(), requestBody.getEndDate());
     }
 
     @PostMapping
