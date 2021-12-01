@@ -16,8 +16,8 @@ import java.util.Set;
 public class CategoryDTO {
     private Long id;
     private Long userId;
-    private Type categoryType;
-    private String categoryName;
-    private Set<TransactionDTO> transactionDTOS;
+    private Type type;
+    private String name;
+    private Set<TransactionDTO> transactions;
 
 }

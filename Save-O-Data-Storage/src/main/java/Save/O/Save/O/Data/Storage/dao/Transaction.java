@@ -17,9 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Transaction {
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JsonIgnore
-    private Category category;
+
 
     @OneToOne
     @JoinColumn(name = "imageId")

@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    @OneToMany( cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany( cascade = CascadeType.ALL, fetch=FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
     @JoinColumn(name="user_id")
     private Set<Category> categories;

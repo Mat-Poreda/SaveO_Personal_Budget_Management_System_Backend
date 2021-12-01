@@ -17,11 +17,9 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Category {
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JsonIgnore
-    private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
     @JoinColumn(name="category_id")
     private Set<Transaction> transactions;
