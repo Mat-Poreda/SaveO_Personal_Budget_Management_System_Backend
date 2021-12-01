@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,13 +44,12 @@ public class CategoryService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No user with given id");
         }else{
             User user=userRepository.findById(categoryDTO.getUserId()).get();
-            if(!categoryRepository.findByUserAndNameAndType(user, categoryDTO.getName(), categoryDTO.getType()).isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "Category already exists");
-            }else {
+//            if(!categoryRepository.findByUserAndNameAndType(user, categoryDTO.getName(), categoryDTO.getType()).isEmpty()) {
+//                throw new ResponseStatusException(HttpStatus.CONFLICT, "Category already exists");
+//            }else {
                 Category category=new Category();
                 category.setName(categoryDTO.getName());
                 category.setType(categoryDTO.getType());
-                category.setUser(user);
                 category.setTransactions(new HashSet<>());
                 Set<Category> categories=user.getCategories();
                 categories.add(category);
@@ -61,7 +57,7 @@ public class CategoryService {
                 userRepository.save(user);
             }
         }
-    }
+//    }
 
 
     public Set<CategoryDTO> getUserCategories(Long user_id) {
@@ -72,5 +68,24 @@ public class CategoryService {
                     .map(this::convertCategoryToDto)
                     .collect(Collectors.toSet());
         }else return null;
+    }
+
+    public Category getCategory(Long categoryId, Long userId){
+
+        if(categoryRepository.findById(categoryId).isPresent() ){
+            return categoryRepository.getById(categoryId);
+        }else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found");
+    }
+
+    public CategoryDTO getCategoryDTOById(Long categoryId) {
+        if(categoryRepository.findById(categoryId).isPresent()){
+            return convertCategoryToDto(categoryRepository.getById(categoryId));
+        }else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found");
+    }
+
+    public void deleteCategoryById(Long id) {
+        if(categoryRepository.findById(id).isPresent()){
+            categoryRepository.delete(categoryRepository.getById(id));
+        }
     }
 }

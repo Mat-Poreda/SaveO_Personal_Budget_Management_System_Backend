@@ -21,21 +21,21 @@ public class CategoryController {
     public Set<CategoryDTO> getUserCategories(@PathVariable(name="user_id") Long user_id){
         return categoryService.getUserCategories(user_id);
     }
-//
-//    @GetMapping("/{id}")
-//    public UserDTO getAllUsers(@PathVariable(name="id")Long id){
-//        return categoryService.getUserById(id);
-//    }
+
+    @GetMapping("/{categoryId}")
+    public CategoryDTO getCategoryDTOById(@PathVariable(name="categoryId")Long categoryId){
+        return categoryService.getCategoryDTOById(categoryId);
+    }
 
     @PostMapping
     public void createCategory(@RequestBody CategoryDTO categoryDTO) throws ParseException {
         categoryService.createCategory(categoryDTO);
     }
 
-//    @DeleteMapping("/{id}")
-//    public void deleteUserById(@PathVariable(name="id")Long id){
-//        categoryService.deleteUserById(id);
-//    }
+    @DeleteMapping("/{id}")
+    public void deleteCategoryById(@PathVariable(name="id")Long id){
+        categoryService.deleteCategoryById(id);
+    }
 
 
 }

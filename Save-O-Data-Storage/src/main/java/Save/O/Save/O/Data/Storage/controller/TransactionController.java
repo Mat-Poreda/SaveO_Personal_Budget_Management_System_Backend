@@ -1,5 +1,6 @@
 package Save.O.Save.O.Data.Storage.controller;
 
+import Save.O.Save.O.Data.Storage.dao.Transaction;
 import Save.O.Save.O.Data.Storage.dto.TransactionDTO;
 import Save.O.Save.O.Data.Storage.dto.UserDTO;
 import Save.O.Save.O.Data.Storage.service.TransactionService;
@@ -20,18 +21,19 @@ public class TransactionController {
 //        return transactionService.getAllUserTransactions(user_id);
 //    }
 //
-//    @GetMapping("/{id}")
-//    public TransactionDTO getTransactionById(@PathVariable(name="user_id") Long user_id, @PathVariable(name="id")Long id){
-//        return transactionService.getUserById(user_id, id);
-//    }
-//
-//    @PostMapping()
-//    public TransactionDTO createNewTransaction(TransactionDTO transaction){
-//        return transactionService.createNewTransaction(transaction);
-//    }
+    @GetMapping("/{user_id}/{transactionId}")
+    public TransactionDTO getTransactionById(@PathVariable(name="user_id") Long userId, @PathVariable(name="transactionId")Long transactionId){
+        return transactionService.getTransactionDTOById(userId, transactionId);
+    }
+
+    @PostMapping("/{user_id}")
+    public Transaction createNewTransaction(@PathVariable(name="user_id") Long userId, @RequestBody TransactionDTO transaction){
+        System.out.println("api is working");
+        return transactionService.createNewTransaction(userId, transaction);
+    }
 
     @DeleteMapping("/{id}")
-    public void deleteUserById(@PathVariable(name="id")Long id){
+    public void deleteTransactionById(@PathVariable(name="id")Long id){
         transactionService.deleteTransactionById(id);
     }
 

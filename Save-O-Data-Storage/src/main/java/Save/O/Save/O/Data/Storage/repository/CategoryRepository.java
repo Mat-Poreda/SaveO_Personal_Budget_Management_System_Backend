@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    List<Category> findByUserAndNameAndType(User user, String name, Type type);
+//    List<Category> findByUserAndNameAndType(User user, String name, Type type);
 }

@@ -74,11 +74,19 @@ public class UserService {
     }
 
 
-    public UserDTO getUserById(Long id) {
+    public UserDTO getUserDTOById(Long id) {
         if(userRepository.findById(id).isEmpty()){
             return null;
         }else{
             return convertUserToDto(userRepository.findById(id).get());
+        }
+    }
+
+    public User getUserById(Long id) {
+        if(userRepository.findById(id).isEmpty()){
+            return null;
+        }else{
+            return userRepository.findById(id).get();
         }
     }
 
