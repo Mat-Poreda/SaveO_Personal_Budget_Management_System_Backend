@@ -1,7 +1,7 @@
 package Save.O.Save.O.User.Profile.service;
 
 import Save.O.Save.O.User.Profile.dao.Image;
-import Save.O.Save.O.User.Profile.dao.User;
+import Save.O.Save.O.User.Profile.dao.UserDetails;
 import Save.O.Save.O.User.Profile.repository.ImageRepository;
 import Save.O.Save.O.User.Profile.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +27,12 @@ public class ImageService {
         dbImage.setName(multipartImage.getName());
         dbImage.setContent(multipartImage.getBytes());
 
-        User user = userRepository.findById(userId).get();
-        if (user.getImage() != null) {
-            dbImage.setId(user.getImage().getId());
+        UserDetails userDetails = userRepository.findById(userId).get();
+        if (userDetails.getImage() != null) {
+            dbImage.setId(userDetails.getImage().getId());
         }
-        user.setImage(imageRepository.save(dbImage));
-        return userRepository.save(user).getImage().getId();
+        userDetails.setImage(imageRepository.save(dbImage));
+        return userRepository.save(userDetails).getImage().getId();
     }
 
     public Resource getImage(Long imageId) {

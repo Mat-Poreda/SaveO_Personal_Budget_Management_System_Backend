@@ -1,8 +1,0 @@
-auth0:
-  audience: https://saveo/api
-spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: https://YOUR_DOMAIN/
