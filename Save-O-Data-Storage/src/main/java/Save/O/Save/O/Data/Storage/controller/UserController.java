@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/data_storage")
+@RequestMapping("/api/data_storage/user")
 public class UserController {
     @Autowired
     UserService userService;
@@ -35,8 +35,8 @@ public class UserController {
     }
 
     @PostMapping
-    public UserDTO createNewUser(Optional<Long> id){
-        return userService.createNewUser(id);
+    public UserDTO createNewUser(@RequestBody UserDTO userDTO){
+        return userService.createNewUser(userDTO);
     }
 
     @DeleteMapping("/{id}")

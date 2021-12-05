@@ -21,7 +21,9 @@ public class User {
     private Set<Category> categories;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+
 
 }

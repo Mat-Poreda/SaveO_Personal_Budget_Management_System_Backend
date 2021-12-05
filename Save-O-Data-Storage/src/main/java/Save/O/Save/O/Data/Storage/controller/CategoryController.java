@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping("/api/data_storage/category")
 public class CategoryController {
     @Autowired
     CategoryService categoryService;

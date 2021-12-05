@@ -18,6 +18,7 @@ public class CategoryDTO {
     private Long userId;
     private Type type;
     private String name;
+    private String icon;
     private Set<TransactionDTO> transactions;
 
 }
