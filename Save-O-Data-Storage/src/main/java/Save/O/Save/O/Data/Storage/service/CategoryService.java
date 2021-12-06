@@ -60,10 +60,14 @@ public class CategoryService {
 //    }
 
 
-    public Set<CategoryDTO> getUserCategories(Long user_id) {
+    public Set<CategoryDTO> getUserCategories(Long user_id, Type type) {
         if(userRepository.findById(user_id).isPresent()){
             User user=userRepository.findById(user_id).get();
             Set<Category> categories = user.getCategories();
+
+            categories=categories.stream()
+                    .filter(f -> type.compareTo(f.getType()) == 0)
+                    .collect(Collectors.toSet());
             return categories.stream()
                     .map(this::convertCategoryToDto)
                     .collect(Collectors.toSet());

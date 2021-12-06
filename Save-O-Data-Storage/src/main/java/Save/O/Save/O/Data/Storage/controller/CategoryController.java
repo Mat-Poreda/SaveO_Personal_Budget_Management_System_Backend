@@ -2,6 +2,7 @@ package Save.O.Save.O.Data.Storage.controller;
 
 import Save.O.Save.O.Data.Storage.dto.CategoryDTO;
 import Save.O.Save.O.Data.Storage.dto.UserDTO;
+import Save.O.Save.O.Data.Storage.enums.Type;
 import Save.O.Save.O.Data.Storage.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +18,11 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping("/{user_id}/categories")
-    public Set<CategoryDTO> getUserCategories(@PathVariable(name="user_id") Long user_id){
-        return categoryService.getUserCategories(user_id);
+    @GetMapping("/{user_id}/{type}")
+    public Set<CategoryDTO> getUserCategories(@PathVariable(name="user_id") Long user_id, @PathVariable(name="type") Type type){
+        System.out.println(type);
+        System.out.println(type.compareTo(Type.DEPOSIT));
+        return categoryService.getUserCategories(user_id, type);
     }
 
     @GetMapping("/{categoryId}")
