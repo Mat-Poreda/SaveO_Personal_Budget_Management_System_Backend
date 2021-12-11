@@ -11,16 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/transactions")
+@RequestMapping("/api/data_storage/transactions")
 public class TransactionController {
     @Autowired
     TransactionService transactionService;
 
-//    @GetMapping
-//    public List<TransactionDTO> getAllTransactionsFromCategory(@PathVariable(name="category_id") Long category_id){
-//        return transactionService.getAllUserTransactions(user_id);
-//    }
-//
+
     @GetMapping("/{user_id}/{transactionId}")
     public TransactionDTO getTransactionById(@PathVariable(name="user_id") Long userId, @PathVariable(name="transactionId")Long transactionId){
         return transactionService.getTransactionDTOById(userId, transactionId);

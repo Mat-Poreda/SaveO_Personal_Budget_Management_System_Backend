@@ -4,10 +4,12 @@ import Save.O.Save.O.Data.Storage.dao.Category;
 import Save.O.Save.O.Data.Storage.dao.Transaction;
 import Save.O.Save.O.Data.Storage.dao.User;
 import Save.O.Save.O.Data.Storage.dto.CategoryDTO;
+import Save.O.Save.O.Data.Storage.dto.ReportRequestDTO;
 import Save.O.Save.O.Data.Storage.dto.UserDTO;
 import Save.O.Save.O.Data.Storage.enums.Type;
 import Save.O.Save.O.Data.Storage.repository.CategoryRepository;
 import Save.O.Save.O.Data.Storage.repository.UserRepository;
+import org.apache.tomcat.jni.Local;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -60,11 +63,10 @@ public class CategoryService {
 //    }
 
 
-    public Set<CategoryDTO> getUserCategories(Long user_id, Type type) {
+    public Set<CategoryDTO> getUserCategories(Long user_id, Type type, LocalDate startDate, LocalDate endDate) {
         if(userRepository.findById(user_id).isPresent()){
             User user=userRepository.findById(user_id).get();
             Set<Category> categories = user.getCategories();
-
             categories=categories.stream()
                     .filter(f -> type.compareTo(f.getType()) == 0)
                     .collect(Collectors.toSet());
@@ -79,6 +81,24 @@ public class CategoryService {
         if(categoryRepository.findById(categoryId).isPresent() ){
             return categoryRepository.getById(categoryId);
         }else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found");
+    }
+
+    public ReportRequestDTO getCategoryStats(Long categoryId, LocalDate startDate, LocalDate endDate){
+        ReportRequestDTO report=new ReportRequestDTO();
+        report.setId(categoryId);
+        report.setStartDate(startDate);
+        report.setEndDate(endDate);
+        if(categoryRepository.findById(categoryId).isPresent()){
+            String uncutList=categoryRepository.getUserCategoriesStats(categoryId, startDate, endDate);
+            if(uncutList!=null && uncutList!=""){
+            String[] list=uncutList.split(",");
+
+                report.setSum(Double.parseDouble(list[1]));
+                report.setCount(Double.parseDouble(list[2]));
+                report.setAvg(Double.parseDouble(list[3]));
+            }
+        }
+        return report;
     }
 
     public CategoryDTO getCategoryDTOById(Long categoryId) {

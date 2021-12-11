@@ -20,5 +20,9 @@ public class CategoryDTO {
     private String name;
     private String icon;
     private Set<TransactionDTO> transactions;
+    private double  sum;
+    private double count;
+    private double avg;
+
 
 }

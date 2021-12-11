@@ -12,8 +12,8 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     @Query(value="" +
-            "SELECT c.name, SUM(t.price) vol from transaction t left join category c on t.category_id=c.id where c.user_id=:userid and t.date between :start_date and :end_date  group by c.name"
+            "SELECT c.name, SUM(t.price) vol from transaction t left join category c on t.category_id=c.id where c.user_id=:userid and t.date between :startDate and :endDate  group by c.name"
             , nativeQuery = true)
-    List<String> userCategoriesBalance(@Param("userid") Long id, @Param("start_date") LocalDate startDate, @Param("end_date") LocalDate endDate);
+    List<String> userCategoriesBalance(@Param("userid") Long id, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
 }
