@@ -92,7 +92,6 @@ public class CategoryService {
             String uncutList=categoryRepository.getUserCategoriesStats(categoryId, startDate, endDate);
             if(uncutList!=null && uncutList!=""){
             String[] list=uncutList.split(",");
-
                 report.setSum(Double.parseDouble(list[1]));
                 report.setCount(Double.parseDouble(list[2]));
                 report.setAvg(Double.parseDouble(list[3]));

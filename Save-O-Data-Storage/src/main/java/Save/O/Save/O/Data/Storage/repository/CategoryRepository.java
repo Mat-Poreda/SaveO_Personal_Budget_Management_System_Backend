@@ -3,6 +3,7 @@ package Save.O.Save.O.Data.Storage.repository;
 import Save.O.Save.O.Data.Storage.dao.Category;
 import Save.O.Save.O.Data.Storage.dao.User;
 import Save.O.Save.O.Data.Storage.dto.CategoryDTO;
+import Save.O.Save.O.Data.Storage.dto.ReportDTO;
 import Save.O.Save.O.Data.Storage.dto.ReportRequestDTO;
 import Save.O.Save.O.Data.Storage.enums.Type;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,5 +21,38 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             , nativeQuery = true)
     String getUserCategoriesStats(@Param("id") Long id, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
+    @Query(value= """
+            SELECT 'Balance' as name, SUM(coalesce(i.price,0))-SUM(coalesce(e.price,0))-SUM(coalesce(d.price,0)) as value 
+            FROM category c
+            
+            LEFT JOIN transaction i
+            on c.id=i.category_id
+            and c.type='INCOME'
+            and i.date BETWEEN :START_DATE and :END_DATE
+                        
+            LEFT JOIN transaction e
+            on c.id=e.category_id
+            and c.type='EXPENSE'
+            and e.date BETWEEN :START_DATE and :END_DATE
+                        
+            LEFT JOIN transaction d
+            on c.id=d.category_id
+            and c.type='DEPOSIT'
+            and d.date BETWEEN :START_DATE and :END_DATE
+            
+            WHERE c.user_id=:userId
+            """, nativeQuery = true)
+    String getBalance(@Param("userId") Long userId, @Param("START_DATE") LocalDate startDate, @Param("END_DATE") LocalDate endDate);
+
+
+    @Query(value= """
+            SELECT c.type as name, SUM(coalesce(t.price,0)) as value FROM category c
+            LEFT JOIN transaction t
+            on c.id=t.category_id
+            and t.date BETWEEN :START_DATE and :END_DATE
+            WHERE c.user_id=:userId
+            GROUP BY c.type   
+            """, nativeQuery = true)
+    String getCategorySum(@Param("userId") Long userId, @Param("START_DATE") LocalDate startDate, @Param("END_DATE") LocalDate endDate);
 
 }
