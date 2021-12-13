@@ -41,8 +41,21 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             and d.date BETWEEN :START_DATE and :END_DATE
             
             WHERE c.user_id=:userId
+            
+            UNION ALL
+            
+            SELECT c.type as name, SUM(coalesce(t.price,0)) as value 
+            FROM category c
+            
+            LEFT JOIN transaction t
+            on c.id=t.category_id
+            and t.date BETWEEN :START_DATE and :END_DATE
+            
+            WHERE c.user_id=:userId
+            GROUP BY c.type
+            
             """, nativeQuery = true)
-    String getBalance(@Param("userId") Long userId, @Param("START_DATE") LocalDate startDate, @Param("END_DATE") LocalDate endDate);
+    String[] getBalance(@Param("userId") Long userId, @Param("START_DATE") LocalDate startDate, @Param("END_DATE") LocalDate endDate);
 
 
     @Query(value= """
@@ -54,5 +67,23 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             GROUP BY c.type   
             """, nativeQuery = true)
     String getCategorySum(@Param("userId") Long userId, @Param("START_DATE") LocalDate startDate, @Param("END_DATE") LocalDate endDate);
+
+
+
+    @Query(value= """
+            SELECT c.name as name, SUM(coalesce(t.price,0)) as value FROM category c
+            LEFT JOIN transaction t
+            on c.id=t.category_id
+            and t.date BETWEEN :START_DATE and :END_DATE
+            WHERE c.user_id=:userId
+            and c.type=:TYPE
+            GROUP BY c.name   
+            """, nativeQuery = true)
+    String[] getCategoryStatsByType(
+            @Param("userId") Long userId,
+            @Param("START_DATE") LocalDate startDate,
+            @Param("END_DATE") LocalDate endDate,
+            @Param("TYPE") String type);
+
 
 }
