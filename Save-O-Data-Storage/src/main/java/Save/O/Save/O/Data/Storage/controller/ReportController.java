@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/data_storage/report")
@@ -19,16 +20,24 @@ public class ReportController {
     @GetMapping("/{userId}/balance")
     public List<ReportDTO> getbalance(
             @PathVariable(name="userId")Long userId,
-            @RequestParam(name="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(name="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate){
+            @RequestParam(name="startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(name="endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate){
         return reportService.getUserBalance(userId, startDate, endDate);
+    }
+
+    @GetMapping("/{userId}/type_stats")
+    public List<ReportDTO> getTypes(
+            @PathVariable(name="userId")Long userId,
+            @RequestParam(name="startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(name="endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate){
+        return reportService.getUserTypes(userId, startDate, endDate);
     }
 
     @GetMapping("/{userId}/category_stats_by_type")
     public List<ReportDTO> getCategoryStatsByType(
             @PathVariable(name="userId")Long userId,
-            @RequestParam(name="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(name="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(name="startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(name="endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
             @RequestParam(name="type") Type type){
         return reportService.getCategoryStatsByType(userId, startDate, endDate, type);
     }
