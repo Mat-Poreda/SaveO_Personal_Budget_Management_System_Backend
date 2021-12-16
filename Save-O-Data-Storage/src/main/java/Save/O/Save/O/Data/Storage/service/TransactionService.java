@@ -48,6 +48,7 @@ public class TransactionService {
             transactions.add(transaction);
             category.setTransactions(transactions);
             category=categoryRepository.save(category);
+            System.out.println("apis is saving. cat name= "+ category.getName());
             return transaction;
         }
         catch (Exception e){

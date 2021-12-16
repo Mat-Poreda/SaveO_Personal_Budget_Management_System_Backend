@@ -15,7 +15,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class UserDetails {
     @OneToOne
     @JoinColumn(name = "imageId")
     @JsonIgnore

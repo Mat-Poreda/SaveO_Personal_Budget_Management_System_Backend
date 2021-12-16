@@ -1,28 +1,24 @@
 package Save.O.Save.O.Data.Storage.dto;
 
+import Save.O.Save.O.Data.Storage.dao.Category;
 import Save.O.Save.O.Data.Storage.enums.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.Set;
+import java.time.LocalDate;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class CategoryDTO {
+@AllArgsConstructor
+public class ReportRequestDTO {
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Long id;
-    private Long userId;
-    private Type type;
-    private String name;
-    private String icon;
-    private Set<TransactionDTO> transactions;
     private double  sum;
     private double count;
     private double avg;
-
 
 }

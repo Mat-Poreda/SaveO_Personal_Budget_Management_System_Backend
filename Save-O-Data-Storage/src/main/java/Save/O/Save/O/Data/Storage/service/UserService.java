@@ -9,7 +9,9 @@ import Save.O.Save.O.Data.Storage.repository.TransactionRepository;
 import Save.O.Save.O.Data.Storage.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.text.ParseException;
 import java.util.Arrays;
@@ -39,11 +41,14 @@ public class UserService {
         return user;
     }
 
-    public UserDTO createNewUser(Optional<Long> id){
-        if(id.isPresent() && userRepository.findById(id.get()).isPresent()){
-            return convertUserToDto(userRepository.findById(id.get()).get());
+    public UserDTO createNewUser(UserDTO userDTO){
+        if(userDTO.getId()!=null  && userRepository.findById(userDTO.getId()).isPresent()){
+            return convertUserToDto(userRepository.findById(userDTO.getId()).get());
+        }else if (userDTO.getId()==null){
+          throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User Id must be provided");
         }else{
             User user=new User();
+            user.setId(userDTO.getId());
             user.setCategories(new HashSet<>());
             user.setCategories(new HashSet<>(Arrays.asList(
                     new Category(Type.INCOME, "Salary"),

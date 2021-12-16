@@ -30,4 +30,9 @@ public class Transaction {
     private BigDecimal price;
     private LocalDate date;
 
+    public Transaction(String description, BigDecimal price, LocalDate date) {
+        this.description = description;
+        this.price = price;
+        this.date = date;
+    }
 }
